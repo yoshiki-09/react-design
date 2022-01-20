@@ -9,7 +9,7 @@ import { Button } from 'primereact/button';
 
 const $ = window.$;
 
-const Search = () => {
+const SearchUser = () => {
     const [userNumber, setUserNumber] = useState("");
 
     const updateUserNumber = (e) => {
@@ -41,11 +41,14 @@ const Search = () => {
                     </div>
                 </div>
                 <div className="button-demo">
-                    <Button label="Search" icon="pi pi-search" />
+                    <span className="p-buttonset">
+                        <Button label="Search" icon="pi pi-search" />
+                        <Button label="Clear" icon="pi pi-times" />
+                    </span>
                 </div>
             </form>
         </React.Fragment>
     );
 }
 
-export default Search;
+export default SearchUser;

@@ -140,6 +140,7 @@ app.post('/api/search', function(req, res) {
     // SQLデータベースとの接続が終了した際に呼び出される。
     connection.on('end', function() {
         console.log("DB接続終了");
+        res.send({ content: content });
     });
 
     connection.connect();
@@ -148,7 +149,7 @@ app.post('/api/search', function(req, res) {
     function queryExecute() {
         // クエリ準備
         request = new Request(
-            "SELECT * FROM UserPersonalInfo WHERE UserNumber = @number", function(err, rowCount) {
+            "SELECT * FROM UserPersonalInfo", function(err, rowCount) {
                 if(err) {
                     // エラーメッセージを出力する。
                     console.error(err.message);

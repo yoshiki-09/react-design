@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
+import React, { useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
+import { Messages } from 'primereact/messages';
+import Link from'@mui/material/Link';
+import Box from '@mui/material/Box';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import "../styles/Password.css";
+import "../styles/FormDemo.css";
 import { useNavigate } from 'react-router-dom';
 import HeaderLogin from '../components/Header_Login';
 
@@ -17,7 +19,7 @@ const $ = window.$;
 const Login = () => {
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const message = useRef(null);
     const navigate = useNavigate();
 
     const updateUserID = (e) => {
@@ -28,8 +30,17 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
+    const addMessage = () => {
+        message.current.show([{severity: 'error', detail: 'ユーザーIDまたはパスワードが間違っています', sticky: true}]);
+    };
+
+    const clearMessage = () => {
+        message.current.clear();
+    };
+
     const login = (e) => {
         e.preventDefault();
+        clearMessage();
 
         const body = { userID: userID, password: password };
 
@@ -42,11 +53,10 @@ const Login = () => {
         .then(
             function(data) {
                 if(data.authorized) {
-                    setMessage("ログイン成功");
                     navigate('/home');
                 }
                 else {
-                    setMessage("ユーザーIDまたはパスワードが間違っています");
+                    addMessage();
                     document.getElementById("userID").classList.add("p-invalid");
                     document.getElementById("password").classList.add("p-invalid");
                 }
@@ -57,28 +67,36 @@ const Login = () => {
     return (
         <React.Fragment>
             <HeaderLogin />
-            <Container component="main" maxWidth="xs" fixed>
-                <CssBaseline />
-                <h1>ログイン画面</h1>
-                <form onSubmit={login}>
-                    <div>
-                        <label htmlFor="userID" className="p-col-fixed" style={{width: '100px'}}>ユーザーID</label>
-                        <div className="p-col">
-                            <InputText id="userID" value={userID} onChange={updateUserID} />
+            <Box sx={{ marginTop: 5 }}>
+                <div className="form-demo">
+                    <div className="p-d-flex p-jc-center">
+                        <div className="card">
+                            <h1 className="p-text-center">ログイン画面</h1>
+                            <form onSubmit={login} className="p-fluid">
+                                <div className="p-field">
+                                    <span className="p-float-label">
+                                        <InputText id="userID" value={userID} onChange={updateUserID} />
+                                        <label htmlFor="userID">ユーザーID</label>
+                                    </span>
+                                </div>
+                                <div className="p-field">
+                                    <span className="p-float-label">
+                                        <Password id="password" value={password} onChange={updatePassword} toggleMask />
+                                        <label htmlFor="password">パスワード</label>
+                                    </span>
+                                </div>
+                                <div className="button-demo">
+                                    <Button label="ログイン" icon="pi pi-check" />
+                                </div>
+                            </form>
+                            <Link href="/createUser" variant="body2">
+                                新規会員登録はこちら
+                            </Link>
+                            <Messages ref={message} />
                         </div>
                     </div>
-                    <div className="p-d-block p-mx-auto">
-                        <label htmlFor="password" className="p-col-fixed" style={{width: '100px'}}>パスワード</label>
-                        <div className="p-col">
-                            <Password id="password" value={password} onChange={updatePassword} toggleMask />
-                        </div>
-                    </div>
-                    <div className="button-demo">
-                        <Button label="Login" icon="pi pi-check" />
-                    </div>
-                </form>
-                <p className="p-text-bold">{message}</p>
-            </Container>
+                </div>
+            </Box>
         </React.Fragment>
     );
 }
