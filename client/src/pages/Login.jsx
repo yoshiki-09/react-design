@@ -31,7 +31,7 @@ const Login = () => {
     };
 
     const addMessage = () => {
-        message.current.show([{severity: 'error', detail: 'ユーザーIDまたはパスワードが間違っています', sticky: true}]);
+        message.current.show([{severity: 'error', detail: 'ユーザーIDまたはパスワードが間違っています', sticky: true, closable: false}]);
     };
 
     const clearMessage = () => {
