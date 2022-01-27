@@ -6,15 +6,27 @@ import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable'; 
 
 const $ = window.$;
 
 const SearchUser = () => {
     const [userNumber, setUserNumber] = useState("");
+    const [users, setUsers] = useState([]);
+    const columns = [
+        {field: 'lastName', header: 'lastName'},
+        {field: 'firstName', header: 'firstName'},
+        {field: 'gender', header: 'gender'}
+    ];
 
     const updateUserNumber = (e) => {
         setUserNumber(e.target.value);
     };
+
+    const dynamicColumns = columns.map((col, i) => {
+        return <Column key={col.field} field={col.field} header={col.header} />;
+    });
 
     const search = (e) => {
         e.preventDefault();
@@ -26,7 +38,11 @@ const SearchUser = () => {
             dataType: 'json',
             type: 'POST',
             data: body
-        })
+        }).then(
+            function(data) {
+                setUsers(data.content);
+            }
+        );
     }
 
     return (
@@ -42,9 +58,14 @@ const SearchUser = () => {
                 </div>
                 <div className="button-demo">
                     <span className="p-buttonset">
-                        <Button label="Search" icon="pi pi-search" />
-                        <Button label="Clear" icon="pi pi-times" />
+                        <Button label="検索" icon="pi pi-search" />
+                        <Button label="条件クリア" icon="pi pi-times" />
                     </span>
+                </div>
+                <div className="card">
+                    <DataTable value={users} responsiveLayout="scroll">
+                        {dynamicColumns}
+                    </DataTable>
                 </div>
             </form>
         </React.Fragment>

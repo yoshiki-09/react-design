@@ -21,6 +21,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
@@ -85,6 +86,10 @@ const Header = () => {
 
     const logout = () => {
         navigate('/logout');
+    };
+
+    const home = () => {
+        navigate('/home');
     };
 
     return (
@@ -155,6 +160,14 @@ const Header = () => {
                 </DrawerHeader>
                 <Divider />
                 <List>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={home}>
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItemButton>
+                    </ListItem>
                     <ListItem disablePadding>
                         <ListItemButton onClick={searchUser}>
                             <ListItemIcon>

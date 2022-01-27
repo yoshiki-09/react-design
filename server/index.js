@@ -8,7 +8,15 @@ var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 var { request } = require('express');
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+});
+  
+app.get("/api", (req, res) => {
+    res.json({ message: "Hello World!" });
+});
 
 app.listen(port, () => {
   console.log(`listening on *:${port}`);
