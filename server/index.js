@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const router = express.Router();
 const port = process.env.PORT || 3001
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
@@ -10,7 +11,15 @@ var TYPES = require('tedious').TYPES;
 var { request } = require('express');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/')));
+
+// 静的ファイルのルーティング
+router.use(express.static('public'));
+
+router.get('*', (req, res, next) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.use('/', router);
 
 app.listen(port, () => {
   console.log(`listening on *:${port}`);
