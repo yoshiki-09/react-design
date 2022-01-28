@@ -10,15 +10,7 @@ var TYPES = require('tedious').TYPES;
 var { request } = require('express');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../client/build')));
-  
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello World!" });
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname,'../client/build/index.html'));
-});
+app.use(express.static(path.join(__dirname, '/')));
 
 app.listen(port, () => {
   console.log(`listening on *:${port}`);
