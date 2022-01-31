@@ -7,7 +7,6 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
     entry: "./client/src/index.js",
-    target: "node",
     output: {
         path: path.join(__dirname, './client/dist'),
         filename: "sample.js"
