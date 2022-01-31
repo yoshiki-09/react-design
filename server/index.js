@@ -1,10 +1,13 @@
 const express = require('express')
+// const fs = require('fs');
 const app = express()
 const router = express.Router();
 const port = process.env.PORT || 3001
 const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const path = require('path');
+const DIST_DIR = path.join(__dirname, '../client/dist');
+const HTML_FILE = path.join(DIST_DIR, 'index.html');
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
@@ -12,14 +15,11 @@ var { request } = require('express');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 静的ファイルのルーティング
-router.use(express.static('public'));
+app.use(express.static(DIST_DIR));
 
-router.get('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
+app.get('*', (req, res, next) => {
+    res.sendFile(HTML_FILE);
 });
-
-app.use('/', router);
 
 app.listen(port, () => {
   console.log(`listening on *:${port}`);
