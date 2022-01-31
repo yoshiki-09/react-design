@@ -7,10 +7,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
     entry: "./client/src/index.js",
-    output: { // NEW
+    target: "node",
+    output: {
         path: path.join(__dirname, './client/dist'),
         filename: "sample.js"
-    }, // NEW Ends
+    },
     plugins: [htmlPlugin],
     module: {
         rules: [
@@ -30,42 +31,3 @@ module.exports = {
         modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
 };
-
-// import HtmlWebPackPlugin from "html-webpack-plugin";
-// import { webpack } from "webpack";
-// import path from "path";
-
-// export default (env, args) => {
-//     const isProduction = args.mode === 'production';
-//     const devtool = !isProduction && 'inline-source-map';
-//     const rules = [
-//         {
-//             test: /\.(js|jsx)?$/,
-//             exclude: /node_modules/,
-//             use: ['babel-loader'],
-//         },
-//         {
-//             test: /\.css$/,
-//             use: ['style-loader', 'css-loader'],
-//         },
-//     ];
-//     const htmlPlugin = new HtmlWebPackPlugin({
-//         template: "./client/public/index.html",
-//         filename: "./index.html"
-//     });
-
-//     return {
-//         devtool,
-//         entry: './client/src/index.js',
-//         output: {
-//             path: path.resolve(__dirname, './client/dist'),
-//             filename: 'sample.js',
-//         },
-//         module: { rules },
-//         resolve: {
-//             // modules: ['node_modules'],
-//             extensions: ['.js', '.jsx'],
-//         },
-//         plugins: [htmlPlugin]
-//     };
-// };
