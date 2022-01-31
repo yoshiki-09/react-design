@@ -8,7 +8,7 @@
     "server": "nodemon server/index.js",
     "client": "PORT=3002 npm start --prefix client",
     "dev": "webpack --mode development && node server/index.js",
-    "build": "webpack --mode production --display-error-details",
+    "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "watch": "npm run build:dev -- --watch"
   },
